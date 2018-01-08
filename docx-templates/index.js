@@ -1,8 +1,27 @@
 const createReport = require('docx-templates');
 var fs = require('fs');
 var path = require('path');
+const uuidv4 = require('uuid/v4');
 
-exports.makeDocx = (content) => {
+exports.makeDocx = async (content) => {
+    const data = content.body;
+    console.log("DATA", data)
+
+    // place contingent agents into a separate array for processing if present
+    if (data.agents && data.agents.length > 1) {
+        data['contingentAgents'] = data.agents.slice(1);       
+    }
+
+    // Populate the .docx template
+    // use uuidv4 to guarantee that a unique filename will be created.
+    await createReport({
+        template: path.resolve(__dirname, 'dpoa.docx'),
+        output: path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`),
+        data
+      });
+}
+
+exports.makeDocxTEST = (content) => {
     const data = {
         firstName: 'John',
         lastName: 'Doe',

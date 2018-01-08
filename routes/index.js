@@ -4,10 +4,11 @@ const stream = require('stream');
 
 //const storeController = require('../controllers/storeController');
 const { catchErrors } = require('../handlers/errorHandlers');
-const {makeDocx } = require('../docx-templates/index.js');
+const { makeDocx } = require('../docx-templates/index.js');
 
 router.post('/makedoc', (req, res) => {   
-    makeDocx({});
+    makeDocx(req.body);
+    res.status(200).json({message: "Successfully created document"});
 });
 
 //define a simple route
