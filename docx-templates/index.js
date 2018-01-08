@@ -3,22 +3,26 @@ var fs = require('fs');
 var path = require('path');
 const uuidv4 = require('uuid/v4');
 
-exports.makeDocx = async (content) => {
+exports.makeDocx = (content) => {
     const data = content.body;
     console.log("DATA", data)
 
+    // initialize contingentAgents to an empty array to prevent an error
+    // if there are no contingent Agents listed
+    data['contingentAgents'] = [];
+
     // place contingent agents into a separate array for processing if present
     if (data.agents && data.agents.length > 1) {
-        data['contingentAgents'] = data.agents.slice(1);       
+        data['contingentAgents'] = data.agents.slice(1);
     }
 
     // Populate the .docx template
     // use uuidv4 to guarantee that a unique filename will be created.
-    await createReport({
+    createReport({
         template: path.resolve(__dirname, 'dpoa.docx'),
         output: path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`),
         data
-      });
+    });
 }
 
 exports.makeDocxTEST = (content) => {
@@ -58,12 +62,12 @@ exports.makeDocxTEST = (content) => {
     };
 
     if (data.agents && data.agents.length > 1) {
-        data['contingentAgents'] = data.agents.slice(1);       
+        data['contingentAgents'] = data.agents.slice(1);
     }
 
     createReport({
         template: path.resolve(__dirname, 'dpoa.docx'),
         output: path.resolve(__dirname, 'output.docx'),
         data
-      });
+    });
 }

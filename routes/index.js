@@ -6,16 +6,16 @@ const stream = require('stream');
 const { catchErrors } = require('../handlers/errorHandlers');
 const { makeDocx } = require('../docx-templates/index.js');
 
-router.post('/makedoc', (req, res) => {   
-    makeDocx(req.body);
-    res.status(200).json({message: "Successfully created document"});
-});
+
+// This is the primary route for creating documents with posted data
+router.post('/makedoc', catchErrors(async (req, res, next) => {       
+        const test = await makeDocx(req.body);
+        res.status(200).json({message: "Successfully created the awesome document"})   
+}));
 
 //define a simple route
 router.get('/', (req, res) => {
     res.json({"message": "Welcome to the API!"});
 });
-
-
 
 module.exports = router;

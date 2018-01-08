@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes');
+const errorHandlers = require('./handlers/errorHandlers');
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
+
 //console.log("DB", process.env.DATABASE);
 
 
@@ -39,6 +41,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
 app.use('/', routes)
+
+// If that above routes didnt work, we 404 them and forward to error handler
+app.use(errorHandlers.notFound);
+
+// Otherwise this was a really bad error we didn't expect! Shoot eh
+if (app.get('env') === 'development') {  
+  /* Development Error Handler - Prints stack trace */
+  app.use(errorHandlers.developmentErrors);
+}
+
+// production error handler
+app.use(errorHandlers.productionErrors);
 
 // listen for requests
 app.set('port', process.env.PORT || 7777);
