@@ -7,7 +7,6 @@ exports.makeDocx = (content) => {
     const data = content.body;
     console.log("DATA", data)
 
-    try {
         // initialize contingentAgents to an empty array to prevent an error
         // if there are no contingent Agents listed
         data['contingentAgents'] = [];
@@ -24,10 +23,6 @@ exports.makeDocx = (content) => {
             output: path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`),
             data
         });
-    }
-    catch (err) {
-        console.log(err.message);
-    }
     
 }
 
