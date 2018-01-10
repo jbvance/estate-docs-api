@@ -8,55 +8,22 @@ const path = require('path');
 
 //Load the docx file as a binary
 module.exports = {
-    SaveDoc: (dataPlaceholder => {
+    saveDoc: (bodyContent => {
+        const data = bodyContent.body;        
         const content = fs
             .readFileSync(path.resolve(__dirname, 'dpoa-1.docx'), 'binary');
 
-        var zip = new JSZip(content);
+        var zip = new JSZip(content);       
 
         var doc = new Docxtemplater();
         doc.loadZip(zip).setOptions({ paragraphLoop: true });
-
-        //set the templateVariables
-        const data = {
-            firstName: 'John',
-            lastName: 'Doe',
-            address: '1234 Main St.',
-            city: 'Houston',
-            state: 'TX',
-            zip: '77002',
-            agents: [
-                {
-                    firstName: 'Mike',
-                    lastName: 'Smith',
-                    address: '9876 Jones St.',
-                    city: 'Tulsa',
-                    state: 'OK',
-                    zip: '74555'
-                },
-                {
-                    firstName: 'Jim',
-                    lastName: 'Jackson',
-                    address: '8179 W. 34th St.',
-                    city: 'Dallas',
-                    state: 'TX',
-                    zip: '99999'
-                },
-                {
-                    firstName: 'Whitt',
-                    lastName: 'Byron',
-                    address: '3400 Oak Forest St.',
-                    city: 'Houston',
-                    state: 'TX',
-                    zip: '77018'
-                }
-            ]
-        };
+        
 
         data['primaryAgent'] = data.agents[0]
         // place contingent agents into a separate array for processing if present
         data['contingentAgents'] = data.agents && data.agents.length > 1 ? data.agents.slice(1) : [];    
         data['hasContingentAgents'] = data['contingentAgents'].length > 0;
+
         //Load data into template
         doc.setData(data);
 

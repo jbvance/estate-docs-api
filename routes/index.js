@@ -10,8 +10,8 @@ const docxTemplater = require('../docx-templates/docxTemplater');
 
 // This is the primary route for creating documents with posted data
 router.post('/makedoc', catchErrors(async (req, res, next) => {       
-        const test = await docxTemplater.SaveDoc(req.body);
-        res.status(200).json({message: "Successfully created the awesome document"})   
+        const test = await docxTemplater.saveDoc(req.body);
+        res.status(200).json({message: "Successfully created the document"})   
 }));
 
 //define a simple route
