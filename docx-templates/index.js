@@ -1,3 +1,11 @@
+
+/******************************************************
+THIS FILE IS NOT CURRENTLY USED. THE DOCXTEMPLATER
+MODULE IS BEING USED IN ITS PLACE, BUT THIS FILE IS BEING
+LEFT IN THE REPO IN CASE IT IS DETERMINED THAT THIS
+MODULE SHOULD BE USED IN THE FUTURE.
+******************************************************/
+
 const createReport = require('docx-templates');
 var fs = require('fs');
 var path = require('path');

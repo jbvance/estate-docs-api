@@ -5,7 +5,9 @@ const routes = require('./routes');
 const errorHandlers = require('./handlers/errorHandlers');
 
 // import environmental variables from our variables.env file
-if(process.env.NODE_ENV !== 'production') require('dotenv').config({ path: 'variables.env' });
+if(process.env.NODE_ENV !== 'production') {
+  require('dotenv').config({ path: 'variables.env' });
+}
 
 //console.log("DB", process.env.DATABASE);
 

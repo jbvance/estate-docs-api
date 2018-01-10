@@ -4,7 +4,6 @@ const stream = require('stream');
 
 //const storeController = require('../controllers/storeController');
 const { catchErrors } = require('../handlers/errorHandlers');
-const { makeDocx } = require('../docx-templates/index.js');
 const docxTemplater = require('../docx-templates/docxTemplater');
 
 

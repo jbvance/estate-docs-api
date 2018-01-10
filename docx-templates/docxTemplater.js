@@ -1,10 +1,18 @@
 const JSZip = require('jszip');
 const Docxtemplater = require('docxtemplater');
 const uuidv4 = require('uuid/v4');
-//const expressions= require('angular-expressions');
+const expressions= require('angular-expressions');
+const uploadToS3 = require('./uploadToS3');
 
 const fs = require('fs');
 const path = require('path');
+
+expressions.filters.upper = function(input) {
+    // This condition should be used to make sure that if your input is undefined, your output 
+    // will be undefined as well and will not throw an error
+    if(!input) return input;
+    return input.toUpperCase();
+}
 
 //Load the docx file as a binary
 module.exports = {
@@ -48,6 +56,8 @@ module.exports = {
             .generate({ type: 'nodebuffer' });
 
         // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
-        fs.writeFileSync(path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`), buf);
+        //fs.writeFileSync(path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`), buf);
+        uploadToS3.uploadFromBuffer(buf, `${uuidv4()}.docx`);
+
     })
 }
