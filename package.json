@@ -13,8 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "0.15.3",
+    "angular-expressions": "^0.3.0",
     "aws-sdk": ">= 2.0.9",
+    "axios": "0.15.3",
     "body-parser": "1.17.1",
     "connect-flash": "0.1.1",
     "connect-mongo": "1.3.2",
