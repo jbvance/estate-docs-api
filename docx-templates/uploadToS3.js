@@ -1,7 +1,11 @@
 var AWS = require('aws-sdk'),
   fs = require('fs');
 
-AWS.config.loadFromPath('./config.json');
+  AWS.config.update({
+    region: process.env.REGION,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    accessKeyId: process.env.ACCESS_KEY_ID
+  });
 
 const upload = (params, data) => {
   const s3 = new AWS.S3();
