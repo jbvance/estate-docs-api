@@ -1,17 +1,17 @@
 var AWS = require('aws-sdk'),
   fs = require('fs');
 
-  AWS.config.update({
-    region: process.env.REGION,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-    accessKeyId: process.env.ACCESS_KEY_ID
-  });
+ // The AWS config vars must be set up to use this module. 
+ // They are saved in environment variables as follows:
+ // AWS_ACCESS_KEY_ID=<value> 
+ // AWS_SECRET_ACCESS_KEY=<value>
 
 const upload = (params, data) => {
   const s3 = new AWS.S3();
   s3.putObject(params, (err, data) => {
     if (err) {
       console.log(err);
+      throw(err);
     } else {
       console.log("Succesfully uploaded data to bucket")
     }
