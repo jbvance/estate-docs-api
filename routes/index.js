@@ -15,8 +15,13 @@ router.post('/makedoc', catchErrors(async (req, res, next) => {
 }));
 
 router.get('/download/:filename', (req, res, next) => {
-    s3.downloadFile(req.params.filename, (data) => {
-        res.send(data.Body);
+    s3.downloadFile(req.params.filename, (err, data) => {
+        if (err) {
+            res.json(err);
+        }
+        else {
+            res.send(data.Body);
+        }
     });
 });
 

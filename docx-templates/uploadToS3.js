@@ -46,6 +46,7 @@ module.exports = {
     upload(params, data);
   },
 
+  // NOT CURRENTLY USED, BUT LEFT IN FOR FUTURE REFERENCE
   getFileUrl: (fileName) => {
     let fileUrl = 'NO URL CREATED';
     const s3Bucket = new AWS.S3( { params: {Bucket: process.env.S3_BUCKET } } );
@@ -66,9 +67,9 @@ module.exports = {
      s3.getObject(params, function(err, data) {       
        if (err) {
          console.log(err, err.stack); // an error occurred
-       } else { // successful response
-         console.log(data);
-         callback(data);
+         callback(err, null);
+       } else { // successful response         
+         callback(null,data);
          
        }    
      })     

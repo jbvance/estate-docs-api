@@ -28,7 +28,6 @@ module.exports = {
         //Load data into template
         doc.setData(data);
 
-
         try {
             // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
             doc.render()
@@ -51,19 +50,13 @@ module.exports = {
         // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
         //fs.writeFileSync(path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`), buf);       
         
-        uploadToS3.uploadFromBuffer(buf, outputFileName);
-
-        const url = uploadToS3.getFileUrl(outputFileName);
+        uploadToS3.uploadFromBuffer(buf, outputFileName);        
        
         return {
             message: "Document successfully created",
-            url
+            filename: outputFileName        
         };
 
     }),
-
-    downloadFile: (filename) => {
-       data = uploadToS3.downloadFile(filename);
-       console.log("DATA", data);
-    }
+   
 }
