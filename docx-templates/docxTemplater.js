@@ -9,6 +9,7 @@ const path = require('path');
 //Load the docx file as a binary
 module.exports = {
     saveDoc: (bodyContent => {
+        const outputFileName = `${uuidv4()}.docx`
         const data = bodyContent.body;        
         const content = fs
             .readFileSync(path.resolve(__dirname, 'dpoa-1.docx'), 'binary');
@@ -48,8 +49,21 @@ module.exports = {
             .generate({ type: 'nodebuffer' });
 
         // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
-        //fs.writeFileSync(path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`), buf);
-        uploadToS3.uploadFromBuffer(buf, `${uuidv4()}.docx`);
+        //fs.writeFileSync(path.resolve(__dirname, 'output_docs', `${uuidv4()}.docx`), buf);       
+        
+        uploadToS3.uploadFromBuffer(buf, outputFileName);
 
-    })
+        const url = uploadToS3.getFileUrl(outputFileName);
+       
+        return {
+            message: "Document successfully created",
+            url
+        };
+
+    }),
+
+    downloadFile: (filename) => {
+       data = uploadToS3.downloadFile(filename);
+       console.log("DATA", data);
+    }
 }
