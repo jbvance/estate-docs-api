@@ -9,8 +9,10 @@ const path = require('path');
 //Load the docx file as a binary
 module.exports = {
     saveDoc: (bodyContent => {
+        //console.log("BODY CONTENT IN SAVEDOC", bodyContent)
         const outputFileName = `${uuidv4()}.docx`
         const data = bodyContent.body;        
+        console.log("data", data)
         const content = fs
             .readFileSync(path.resolve(__dirname, 'dpoa-1.docx'), 'binary');
 
@@ -18,8 +20,7 @@ module.exports = {
 
         var doc = new Docxtemplater();
         doc.loadZip(zip).setOptions({ paragraphLoop: true });
-        
-
+                
         data['primaryAgent'] = data.agents[0]
         // place contingent agents into a separate array for processing if present
         data['contingentAgents'] = data.agents && data.agents.length > 1 ? data.agents.slice(1) : [];    

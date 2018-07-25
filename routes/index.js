@@ -9,10 +9,15 @@ const docxTemplater = require('../docx-templates/docxTemplater');
 
 
 // This is the primary route for creating documents with posted data
-router.post('/makedoc', catchErrors(async (req, res, next) => {       
+router.post('/makedoc', catchErrors(async (req, res, next) => { 
+        //console.log("REQUEST BODY", req.body)      
         const postResults = await docxTemplater.saveDoc(req.body);
         res.status(200).json(postResults)   
 }));
+
+router.post('/test', function(req, res) {
+    res.json(req.body);
+  });
 
 router.get('/download/:filename', (req, res, next) => {
     s3.downloadFile(req.params.filename)
